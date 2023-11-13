@@ -1,20 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const port = process.env.PORT;
+const transactionsRoutes = require('./routes/transactions')
 
 // app
 const app = express();
 
 // middleware
+app.use(express.json());
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
+  console.log(req.path, req.method, new Date().toLocaleString());
   next();
 })
 
 // routes
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the app!' })
-})
+app.use('/api/transactions', transactionsRoutes)
 
 // listen app
 app.listen(port, () => {
